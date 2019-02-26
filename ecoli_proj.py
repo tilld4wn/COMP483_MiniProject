@@ -76,10 +76,17 @@ def main():
 
     # testing with hm27
     annotaion_prokka(HM27[3], HM27[0], output_file)
-    output_file.close()
 
     # try to see if this will add to UPEC
     os.system("cat ./hm27_prokka/hm27_prokka.txt >> UPEC.log")
+
+    os.system("prefetch SRR1278956")
+    os.system("prefetch SRR1278960")
+    os.system("prefetch SRR1283106")
+    os.system("prefetch SRR1278963")
+    output_file.close()
+
+
 
 if __name__ == '__main__':
     main()
