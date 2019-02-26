@@ -64,8 +64,9 @@ def annotaion_prokka(prokka_prefix, strain_fasta,log_file):
     log_file.write(prokka_command+"\n")
     os.system(prokka_command)
 
-def tophat_cufflinks(read1, read2, log_file):
-    tophat_command = "tophat -p 4 index {} {}".format(read1,read2)
+def tophat_cufflinks(strain_fasta, read1, read2, log_file):
+    bwt2_command = "bowtie2-build --threads 4 -f {} {}".format(strain_fasta[0], strain_fasta[2])
+    tophat_command = "tophat -p 4 {} {} {}".format(strain_fasta[2],read1,read2)
     log_file.write(tophat_command+"\n")
     os.system(tophat_command)
 # def Record(strain):
@@ -88,7 +89,7 @@ def main():
     # os.system("prefetch SRR1283106")
     # os.system("prefetch SRR1278963")
     # os.system("fastq-dump -I --split-files ~/ncbi/public/sra/SRR1278956.sra")
-    tophat_cufflinks(HM27[5]+"_1.fastq", HM27[5]+"_2.fastq",output_file)
+    tophat_cufflinks(HM27,HM27[5]+"_1.fastq", HM27[5]+"_2.fastq",output_file)
     output_file.close()
 
 
