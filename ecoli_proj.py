@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import os
 import logging
 from Bio import SeqIO
@@ -60,7 +60,7 @@ def recordInfo(strain,log_file):
 # prokka
 def annotaion_prokka(prokka_prefix, strain_fasta,log_file):
 
-    prokka_command = "prokka --usegenus --genus Escherichia --cpus [4] --myprefix {} {}".format(prokka_prefix, strain_fasta)
+    prokka_command = "prokka --usegenus --genus Escherichia --cpus 4 --prefix {} {}".format(prokka_prefix, strain_fasta)
     log_file.write(prokka_command+"\n")
     os.system(prokka_command)
 
