@@ -64,7 +64,10 @@ def annotaion_prokka(prokka_prefix, strain_fasta,log_file):
     log_file.write(prokka_command+"\n")
     os.system(prokka_command)
 
-
+def tophat_cufflinks(read1, read2, log_file):
+    tophat_command = "tophat -p 4 {} {}".format(read1,read2)
+    log_file.write(tophat_command+"\n")
+    os.system(tophat_command)
 # def Record(strain):
 #     recordSeqIO.parse(strain[0],"fasta"):
 def main():
@@ -84,7 +87,8 @@ def main():
     # os.system("prefetch SRR1278960")
     # os.system("prefetch SRR1283106")
     # os.system("prefetch SRR1278963")
-    os.system("fastq-dump -I --split-files ~/ncbi/public/sra/SRR1278956.sra")
+    # os.system("fastq-dump -I --split-files ~/ncbi/public/sra/SRR1278956.sra")
+    tophat_cufflinks(HM27[5]+"_1.fastq", HM27[5]+"_2.fastq")
     output_file.close()
 
 
