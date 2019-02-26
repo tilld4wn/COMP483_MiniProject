@@ -84,7 +84,7 @@ def main():
     # os.system("prefetch SRR1278960")
     # os.system("prefetch SRR1283106")
     # os.system("prefetch SRR1278963")
-    os.system("fastq-dump -I --split-files SRR1278956.sra")
+    os.system("fastq-dump -I --split-files ~/ncbi/public/sra/SRR1278956.sra")
     output_file.close()
 
 
