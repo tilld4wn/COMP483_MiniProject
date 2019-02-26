@@ -88,7 +88,7 @@ def main():
     # os.system("prefetch SRR1283106")
     # os.system("prefetch SRR1278963")
     # os.system("fastq-dump -I --split-files ~/ncbi/public/sra/SRR1278956.sra")
-    tophat_cufflinks(HM27[5]+"_1.fastq", HM27[5]+"_2.fastq")
+    tophat_cufflinks(HM27[5]+"_1.fastq", HM27[5]+"_2.fastq",output_file)
     output_file.close()
 
 
