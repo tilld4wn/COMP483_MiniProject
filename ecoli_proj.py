@@ -33,7 +33,7 @@ os.system("wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/387/865/GCF_00038
 # os.system("prefetch SRR1283106")
 # os.system("prefetch SRR1278963")
 #
-# os.system("gunzip -d *.gz")
+os.system("gunzip -d *.gz")
 # SRA File addresses
 # HM27 = ftp://ftp.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByRun/sra/SRR/SRR127/SRR1278956/SRR1278956.sra
 # HM46 = ftp://ftp.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByRun/sra/SRR/SRR127/SRR1278960/SRR1278960.sra
