@@ -65,8 +65,9 @@ def annotaion_prokka(prokka_prefix, strain_fasta,log_file):
     os.system(prokka_command)
 
 def tophat_cufflinks(strain_fasta, read1, read2, log_file):
-    bwt2_command = "bowtie2-build --threads 4 -f {} {}".format(strain_fasta[0], strain_fasta[2])
+    bowt2_command = "bowtie2-build --threads 4 -f {} {}".format(strain_fasta[0], strain_fasta[2])
     tophat_command = "tophat -p 4 {} {} {}".format(strain_fasta[2],read1,read2)
+    os.system(bowt2_command)
     log_file.write(tophat_command+"\n")
     os.system(tophat_command)
 # def Record(strain):
