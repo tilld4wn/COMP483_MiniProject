@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import os
-import logging
 from Bio import SeqIO
 
 
@@ -17,8 +16,8 @@ os.chdir('Paul_Risteca')
 # HM46 = ('ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/387/845/GCF_000387845.2_ASM38784v2/GCF_000387845.2_ASM38784v2_genomic.fna.gz','ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/387/845/GCF_000387845.2_ASM38784v2/GCF_000387845.2_ASM38784v2_feature_count.txt.gz')
 # HM65 = ('ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/387/785/GCF_000387785.2_ASM38778v2/GCF_000387785.2_ASM38778v2_genomic.fna.gz','ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/387/785/GCF_000387785.2_ASM38778v2/GCF_000387785.2_ASM38778v2_feature_count.txt.gz')
 # HM69 = ('ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/387/865/GCF_000387865.2_ASM38786v2/GCF_000387865.2_ASM38786v2_genomic.fna.gz','ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/387/865/GCF_000387865.2_ASM38786v2/GCF_000387865.2_ASM38786v2_feature_count.txt.gz')
-
-
+#
+#
 # os.system("wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/387/825/GCF_000387825.2_ASM38782v2/GCF_000387825.2_ASM38782v2_genomic.fna.gz -O HM27_fasta.fna.gz")
 # os.system("wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/387/825/GCF_000387825.2_ASM38782v2/GCF_000387825.2_ASM38782v2_feature_count.txt.gz -O HM27_feature_count.txt.gz")
 # os.system("wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/387/845/GCF_000387845.2_ASM38784v2/GCF_000387845.2_ASM38784v2_genomic.fna.gz -O HM46_fasta.fna.gz")
@@ -27,7 +26,7 @@ os.chdir('Paul_Risteca')
 # os.system("wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/387/785/GCF_000387785.2_ASM38778v2/GCF_000387785.2_ASM38778v2_feature_count.txt.gz -O HM65_feature_count.txt.gz")
 # os.system("wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/387/865/GCF_000387865.2_ASM38786v2/GCF_000387865.2_ASM38786v2_genomic.fna.gz -O HM69_fasta.fna.gz")
 # os.system("wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/387/865/GCF_000387865.2_ASM38786v2/GCF_000387865.2_ASM38786v2_feature_count.txt.gz -O HM69_feature_count.txt.gz")
-
+#
 # os.system("prefetch SRR1278956")
 # os.system("prefetch SRR1278960")
 # os.system("prefetch SRR1283106")
@@ -39,11 +38,11 @@ os.chdir('Paul_Risteca')
 # HM46 = ftp://ftp.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByRun/sra/SRR/SRR127/SRR1278960/SRR1278960.sra
 # HM65 = ftp://ftp.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByRun/sra/SRR/SRR128/SRR1283106/SRR1283106.sra
 # HM69 = ftp://ftp.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByRun/sra/SRR/SRR127/SRR1278963/SRR1278963.sra
-
+#
 HM27 = ("HM27_fasta.fna","HM27_feature_count.txt","HM27", 'hm27_prokka', "./hm27_prokka/hm27_prokka.txt", "SRR1278956")
-HM46 = ("HM46_fasta.fna","HM46_feature_count.txt","HM46", 'hm46_prokka',"")
-HM65 = ("HM65_fasta.fna","HM65_feature_count.txt","HM65", 'hm65_prokka',"")
-HM69 = ("HM69_fasta.fna","HM69_feature_count.txt","HM69", 'hm69_prokka',"")
+HM46 = ("HM46_fasta.fna","HM46_feature_count.txt","HM46", 'hm46_prokka'," ","SRR1278960")
+HM65 = ("HM65_fasta.fna","HM65_feature_count.txt","HM65", 'hm65_prokka'," ","SRR1283106")
+HM69 = ("HM69_fasta.fna","HM69_feature_count.txt","HM69", 'hm69_prokka'," ","SRR1278963")
 
 # 2&3
 def recordInfo(strain,log_file):
@@ -66,7 +65,7 @@ def annotaion_prokka(prokka_prefix, strain_fasta,log_file):
 
 def tophat_cufflinks(strain_fasta, read1, read2, log_file):
     bowt2_command = "bowtie2-build --threads 4 -f {} {}".format(strain_fasta[0], strain_fasta[2])
-    tophat_command = "tophat -p 4 {} {} {}".format(strain_fasta[2],read1,read2)
+    tophat_command = "tophat -p 4 -o {} {} {} {}".format(strain_fasta[2],strain_fasta[2],read1,read2)
     os.system(bowt2_command)
     log_file.write(tophat_command+"\n")
     os.system(tophat_command)
@@ -80,17 +79,29 @@ def main():
     recordInfo(HM69,output_file)
 
     # testing with hm27
-    annotaion_prokka(HM27[3], HM27[0], output_file)
+    annotaion_prokka(HM27[3],HM27[0],output_file)
+    annotaion_prokka(HM46[3],HM46[0],output_file)
+    annotaion_prokka(HM65[3],HM65[0],output_file)
+    annotaion_prokka(HM69[3],HM69[0],output_file)
 
     # try to see if this will add to UPEC
     os.system("cat ./hm27_prokka/hm27_prokka.txt >> UPEC.log")
+    os.system("cat ./hm46_prokka/hm46_prokka.txt >> UPEC.log")
+    os.system("cat ./hm65_prokka/hm65_prokka.txt >> UPEC.log")
+    os.system("cat ./hm69_prokka/hm69_prokka.txt >> UPEC.log")
 
     # os.system("prefetch SRR1278956")
     # os.system("prefetch SRR1278960")
     # os.system("prefetch SRR1283106")
     # os.system("prefetch SRR1278963")
     # os.system("fastq-dump -I --split-files ~/ncbi/public/sra/SRR1278956.sra")
+    os.system("fastq-dump -I --split-files ~/ncbi/public/sra/SRR1278960.sra")
+    os.system("fastq-dump -I --split-files ~/ncbi/public/sra/SRR1283106.sra")
+    os.system("fastq-dump -I --split-files ~/ncbi/public/sra/SRR1278963.sra")
     tophat_cufflinks(HM27,HM27[5]+"_1.fastq", HM27[5]+"_2.fastq",output_file)
+    tophat_cufflinks(HM46,HM46[5]+"_1.fastq", HM46[5]+"_2.fastq",output_file)
+    tophat_cufflinks(HM65,HM65[5]+"_1.fastq", HM65[5]+"_2.fastq",output_file)
+    tophat_cufflinks(HM69,HM69[5]+"_1.fastq", HM69[5]+"_2.fastq",output_file)
     output_file.close()
 
 
