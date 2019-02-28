@@ -121,10 +121,10 @@ def main():
     # tophat_cufflinks(HM65,HM65[5]+"_1.fastq", HM65[5]+"_2.fastq",output_file)
     # tophat_cufflinks(HM69,HM69[5]+"_1.fastq", HM69[5]+"_2.fastq",output_file)
     #
-    # cufflinks(HM27[6],HM27[2],HM27[7])
-    # cufflinks(HM46[6],HM46[2],HM46[7])
-    # cufflinks(HM65[6],HM65[2],HM65[7])
-    # cufflinks(HM69[6],HM69[2],HM69[7])
+    cufflinks(HM27[6],HM27[2],HM27[7])
+    cufflinks(HM46[6],HM46[2],HM46[7])
+    cufflinks(HM65[6],HM65[2],HM65[7])
+    cufflinks(HM69[6],HM69[2],HM69[7])
 
     with open('ecoli_assemblies.txt', 'w') as assemble_file:
         assemble_file.write("./HM27/transcripts.gtf\n")
