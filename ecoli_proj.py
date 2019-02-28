@@ -75,7 +75,9 @@ HM69 = ("HM69_fasta.fna","HM69_feature_count.txt","HM69", 'hm69_prokka'," ","SRR
 #     log_file.write(tophat_command+"\n")
 #     os.system(tophat_command)
 
-def cufflinks(gff_file,cuff_out,bam):
+def cufflinks(gff_file,cuff_out,bam,strain):
+    sort_bam_command = "samtools sort {} -o {}".format(strain[7], strain[2]+'_bam')
+    os.system(sort_bam_command)
     cufflink_command = "cufflinks -p 6 -G {} -o {} {}".format(gff_file, cuff_out, bam)
     os.system(cufflink_command)
 
