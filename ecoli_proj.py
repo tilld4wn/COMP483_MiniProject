@@ -8,7 +8,7 @@ from Bio import SeqIO
 cwd = os.getcwd()
 print(cwd)
 #Create a new directory named 'FirstName_LastName'
-if(not os.path.exists(Paul_Risteca)):
+if(not os.path.exists('Paul_Risteca')):
     os.mkdir('./Paul_Risteca')
     os.chdir('Paul_Risteca')
 else:
