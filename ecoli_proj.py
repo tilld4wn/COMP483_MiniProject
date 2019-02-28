@@ -82,14 +82,14 @@ def cufflinks(gff_file,cuff_out,bam,strain):
     os.system(cufflink_command)
 
 def cuffmerge_norm(assembly_file, merged_gtf, strain1, strain2, strain3, strain4):
-    cuffmerge_command = "cuffmerge -p 6 -o {} {}".format('merged_ecoli', assembly_file)
-    os.system(cuffmerge_command)
-    cuffnorm_command = "cuffnorm -o diff_results -p 6 {} {} {} {}".format(merged_gtf, strain1[2]+'_bam', strain2[2]+'_bam', strain3[2]+'_bam', strain4[2]+'_bam')
+    # cuffmerge_command = "cuffmerge -p 6 -o {} {}".format('merged_ecoli', assembly_file)
+    # os.system(cuffmerge_command)
+    cuffnorm_command = "cuffnorm -o diff_results -p 12 {} {} {} {}".format(merged_gtf, strain1[2]+'_bam', strain2[2]+'_bam', strain3[2]+'_bam', strain4[2]+'_bam')
     os.system(cuffnorm_command)
 # def Record(strain):
 #     recordSeqIO.parse(strain[0],"fasta"):
 def main():
-    # output_file = open ("UPEC.log","a")
+    output_file = open ("UPEC.log","a")
     # recordInfo(HM27,output_file)
     # recordInfo(HM46,output_file)
     # recordInfo(HM65,output_file)
