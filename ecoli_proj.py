@@ -39,10 +39,10 @@ os.system("gunzip -d *.gz")
 # HM65 = ftp://ftp.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByRun/sra/SRR/SRR128/SRR1283106/SRR1283106.sra
 # HM69 = ftp://ftp.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByRun/sra/SRR/SRR127/SRR1278963/SRR1278963.sra
 #
-HM27 = ("HM27_fasta.fna","HM27_feature_count.txt","HM27", 'hm27_prokka', "./hm27_prokka/hm27_prokka.txt", "SRR1278956")
-HM46 = ("HM46_fasta.fna","HM46_feature_count.txt","HM46", 'hm46_prokka'," ","SRR1278960")
-HM65 = ("HM65_fasta.fna","HM65_feature_count.txt","HM65", 'hm65_prokka'," ","SRR1283106")
-HM69 = ("HM69_fasta.fna","HM69_feature_count.txt","HM69", 'hm69_prokka'," ","SRR1278963")
+HM27 = ("HM27_fasta.fna","HM27_feature_count.txt","HM27", 'hm27_prokka', "./hm27_prokka/hm27_prokka.txt", "SRR1278956","./hm27_prokka/hm27_prokka.gff","./HM27_tophat_out/accepted_hits.bam")
+HM46 = ("HM46_fasta.fna","HM46_feature_count.txt","HM46", 'hm46_prokka'," ","SRR1278960","./hm46_prokka/hm46_prokka.gff","./HM46_tophat_out/accepted_hits.bam")
+HM65 = ("HM65_fasta.fna","HM65_feature_count.txt","HM65", 'hm65_prokka'," ","SRR1283106","./hm65_prokka/hm65_prokka.gff","./HM65_tophat_out/accepted_hits.bam")
+HM69 = ("HM69_fasta.fna","HM69_feature_count.txt","HM69", 'hm69_prokka'," ","SRR1278963","./hm65_prokka/hm65_prokka.gff","./HM69_tophat_out/accepted_hits.bam")
 
 # 2&3
 def recordInfo(strain,log_file):
@@ -64,11 +64,18 @@ def annotaion_prokka(prokka_prefix, strain_fasta,log_file):
     os.system(prokka_command)
 
 def tophat_cufflinks(strain_fasta, read1, read2, log_file):
-    bowt2_command = "bowtie2-build --threads 4 -f {} {}".format(strain_fasta[0], strain_fasta[2])
-    tophat_command = "tophat -p 4 -o {} {} {} {}".format(strain_fasta[2]+"_tophat_out",strain_fasta[2],read1,read2)
+    fasta_copy = "cp {} {}.fa".format(strain_fasta[0], strain_fasta[2]))
+    bowt2_command = "bowtie2-build --threads 6 -f {} {}".format(strain_fasta[0], strain_fasta[2])
+    tophat_command = "tophat -p 6 -o {} {} {} {}".format(strain_fasta[2]+"_tophat_out",strain_fasta[2],read1,read2)
     os.system(bowt2_command)
+    os.system(fasta_copy)
     log_file.write(tophat_command+"\n")
     os.system(tophat_command)
+
+def cufflinks(gff_file,cuff_out,bam):
+    cufflink_command = "cufflinks -p 6 -G {} -o {} {}".format(gff_file, cuff_out, bam)
+    os.system(cufflink_command)
+    
 # def Record(strain):
 #     recordSeqIO.parse(strain[0],"fasta"):
 def main():
@@ -98,10 +105,16 @@ def main():
     os.system("fastq-dump -I --split-files ~/ncbi/public/sra/SRR1278960.sra")
     os.system("fastq-dump -I --split-files ~/ncbi/public/sra/SRR1283106.sra")
     os.system("fastq-dump -I --split-files ~/ncbi/public/sra/SRR1278963.sra")
+
     tophat_cufflinks(HM27,HM27[5]+"_1.fastq", HM27[5]+"_2.fastq",output_file)
     tophat_cufflinks(HM46,HM46[5]+"_1.fastq", HM46[5]+"_2.fastq",output_file)
     tophat_cufflinks(HM65,HM65[5]+"_1.fastq", HM65[5]+"_2.fastq",output_file)
     tophat_cufflinks(HM69,HM69[5]+"_1.fastq", HM69[5]+"_2.fastq",output_file)
+
+    cufflink(HM27[6],HM27[2],HM27[7])
+    cufflink(HM46[6],HM46[2],HM46[7])
+    cufflink(HM65[6],HM65[2],HM65[7])
+    cufflink(HM69[6],HM69[2],HM69[7])
     output_file.close()
 
 
