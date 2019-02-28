@@ -79,6 +79,11 @@ def cufflinks(gff_file,cuff_out,bam):
     cufflink_command = "cufflinks -p 6 -G {} -o {} {}".format(gff_file, cuff_out, bam)
     os.system(cufflink_command)
 
+def cuffmerge_norm(assembly_file, merged_gtf, strain1, strain2, strain3, strain4):
+    cuffmerge_command = "cuffmerge -p 6 -o {} {}".format('merged_ecoli', assembly_file)
+    os.system(cuffmerge_command)
+    cuffnorm_command = "cuffnorm -o diff_results -p 6 {} {} {} {}".format('./merged_ecoli/merged.gtf', strain1[7], strain2[7], strain3[7], strain4[7])
+    os.system(cuffnorm_command)
 # def Record(strain):
 #     recordSeqIO.parse(strain[0],"fasta"):
 def main():
@@ -113,11 +118,19 @@ def main():
     # tophat_cufflinks(HM46,HM46[5]+"_1.fastq", HM46[5]+"_2.fastq",output_file)
     # tophat_cufflinks(HM65,HM65[5]+"_1.fastq", HM65[5]+"_2.fastq",output_file)
     # tophat_cufflinks(HM69,HM69[5]+"_1.fastq", HM69[5]+"_2.fastq",output_file)
+    #
+    # cufflinks(HM27[6],HM27[2],HM27[7])
+    # cufflinks(HM46[6],HM46[2],HM46[7])
+    # cufflinks(HM65[6],HM65[2],HM65[7])
+    # cufflinks(HM69[6],HM69[2],HM69[7])
 
-    cufflinks(HM27[6],HM27[2],HM27[7])
-    cufflinks(HM46[6],HM46[2],HM46[7])
-    cufflinks(HM65[6],HM65[2],HM65[7])
-    cufflinks(HM69[6],HM69[2],HM69[7])
+    with open('ecoli_assemblies.txt', 'w') as assemble_file:
+        assemble_file.write("./HM27/transcripts.gtf\n")
+        assemble_file.write("./HM46/transcripts.gtf\n")
+        assemble_file.write("./HM65/transcripts.gtf\n")
+        assemble_file.write("./HM69/transcripts.gtf\n")
+
+    cuffmerge_norm('ecoli_assemblies.txt', HM27, HM46, HM65, HM69)
     output_file.close()
 
 
