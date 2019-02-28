@@ -78,13 +78,13 @@ HM69 = ("HM69_fasta.fna","HM69_feature_count.txt","HM69", 'hm69_prokka'," ","SRR
 def cufflinks(gff_file,cuff_out,bam,strain):
     sort_bam_command = "samtools sort {} -o {}".format(strain[7], strain[2]+'_bam')
     os.system(sort_bam_command)
-    cufflink_command = "cufflinks -p 6 -G {} -o {} {}".format(gff_file, cuff_out, bam)
+    cufflink_command = "cufflinks -p 6 -G {} -o {} {}".format(gff_file, cuff_out, strain[2]+'_bam')
     os.system(cufflink_command)
 
 def cuffmerge_norm(assembly_file, merged_gtf, strain1, strain2, strain3, strain4):
     cuffmerge_command = "cuffmerge -p 6 -o {} {}".format('merged_ecoli', assembly_file)
     os.system(cuffmerge_command)
-    cuffnorm_command = "cuffnorm -o diff_results -p 6 {} {} {}".format(merged_gtf, strain1[7], strain2[7], strain3[7])
+    cuffnorm_command = "cuffnorm -o diff_results -p 6 {} {} {}".format(merged_gtf, strain1[2]+'_bam', strain2[2]+'_bam', strain3[2]+'_bam', strain4[2]+'_bam')
     os.system(cuffnorm_command)
 # def Record(strain):
 #     recordSeqIO.parse(strain[0],"fasta"):
