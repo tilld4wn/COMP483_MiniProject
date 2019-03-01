@@ -64,7 +64,7 @@ def prokka_run(data_lst, prokka_lst, log_file):
     log_file.write("Now running prokka.")
     for strain in data_lst:
         prokka_command = "prokka --usegenus --genus Escherichia --cpus 10 --prefix {} {}".format(strain[3], strain[1])
-        log_file.write(prokka_command)
+        log_file.write(prokka_command+'\n')
         os.system(prokka_command)
 
     for strain, prokInfo in zip(data_lst, prokka_lst):
@@ -100,13 +100,13 @@ def prokka_run(data_lst, prokka_lst, log_file):
         diffCDS = feature_count["CDS"]-prokka_count["CDS"]
         diffT = feature_count["tRNA"]-prokka_count["tRNA"]
         if diffCDS > 0 and diffT > 0:
-            log_file.write("Prokka found {} less CDS and {} less tRNA than the RefSeq in assembly {}.".format(abs(diffCDS), abs(diffT), strain[0]))
+            log_file.write("Prokka found {} less CDS and {} less tRNA than the RefSeq in assembly {}.\n".format(abs(diffCDS), abs(diffT), strain[0]))
         elif diffCDS > 0 and diffT <= 0:
-            log_file.write("Prokka found {} less CDS and {} more tRNA than the RefSeq in assembly {}.".format(abs(diffCDS), abs(diffT), strain[0]))
+            log_file.write("Prokka found {} less CDS and {} more tRNA than the RefSeq in assembly {}.\n".format(abs(diffCDS), abs(diffT), strain[0]))
         elif diffCDS <= 0 and diffT > 0:
-            log_file.write("Prokka found {} more CDS and {} less tRNA than the RefSeq in assembly {}.".format(abs(diffCDS), abs(diffT), strain[0]))
+            log_file.write("Prokka found {} more CDS and {} less tRNA than the RefSeq in assembly {}.\n".format(abs(diffCDS), abs(diffT), strain[0]))
         elif diffCDS <= 0 and diffT <= 0:
-            log_file.write("Prokka found {} more CDS and {} more tRNA than the RefSeq in assembly {}.".format(abs(diffCDS), abs(diffT), strain[0]))
+            log_file.write("Prokka found {} more CDS and {} more tRNA than the RefSeq in assembly {}.\n".format(abs(diffCDS), abs(diffT), strain[0]))
     return
 
 def main():
