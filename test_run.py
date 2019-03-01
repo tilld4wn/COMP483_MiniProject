@@ -176,8 +176,10 @@ def main():
 
     for strain, prokInfo in zip(data_lst, prokka_lst):
         log_file.write("Prokka output for {}:\n".format(strain[0]))
-        UPEC_prokka = "cat {} >> UPEC.log".format(prokInfo[0])
-        os.system(UPEC_prokka)
+        file = prokInfo[0]
+        with open(file, 'r') as input_file:
+            for line in input_file:
+                log_file.write(line+'\n')
 
 # Running Tophat2
     for sra in data_lst:
