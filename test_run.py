@@ -112,14 +112,14 @@ def prokka_run(cpu, data_lst, prokka_lst, log_file):
 def main():
     log_file = open("UPEC.log", "a")
 
+    data_file = []
+    for data in sys.stdin:
+        data_file.append(data)
+
     cpu = input("How many processors would you like to use during this run?\nWe recomend using 4, but go with what your system can handle.\nPlease type the number of processors you want: ")
     type(cpu)
     print("You have chosen to use "+cpu+" processors.")
     log_file.write("You have chosen to use {} processors.".format(str(cpu)))
-
-    data_file = []
-    for data in sys.stdin:
-        data_file.append(data)
 
 # Getting data into working directory to begin analysis
     ftp_lst = [hm27_ftp, hm46_ftp, hm65_ftp, hm69_ftp]
