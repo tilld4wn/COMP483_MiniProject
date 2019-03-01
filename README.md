@@ -9,6 +9,7 @@ This repo contains code for the COMP 483 Mini Project for the grad level. It use
 
 ## Dependencies
 * **Python 3**
+* **Linux**
 * **Biopython**
 * **Prokka**
 * **Bowtie2**
