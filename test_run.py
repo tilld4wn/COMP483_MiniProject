@@ -136,7 +136,9 @@ def main():
     data_lst = [hm27_data, hm46_data, hm65_data, hm69_data]
     seqCount(data_lst, log_file)
 
-
+# Running Prokka on data
+    prokka_lst = [hm27_prokka, hm46_prokka, hm65_prokka, hm69_prokka]
+    prokka_run(cpu, data_lst, prokka_lst, log_file)
 
 if __name__ == '__main__':
     main()
