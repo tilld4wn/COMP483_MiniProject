@@ -60,10 +60,10 @@ def seqCount(data_lst, log_file):
         log_file.write("There are {} bp in the assembly {}.\n".format(str(count), strain[0]))
     return
 
-def prokka_run(cpu, data_lst, prokka_lst, log_file):
+def prokka_run(data_lst, prokka_lst, log_file):
     log_file.write("Now running prokka.")
     for strain in data_lst:
-        prokka_command = "prokka --usegenus --genus Escherichia --cpus {} --prefix {} {}".format(cpu, strain[3], strain[1])
+        prokka_command = "prokka --usegenus --genus Escherichia --cpus 10 --prefix {} {}".format(strain[3], strain[1])
         log_file.write(prokka_command)
         os.system(prokka_command)
 
@@ -116,11 +116,6 @@ def main():
     for data in sys.stdin:
         data_file.append(data)
 
-    cpu = input("How many processors would you like to use during this run?\nWe recomend using 4, but go with what your system can handle.\nPlease type the number of processors you want: ")
-    type(cpu)
-    print("You have chosen to use "+cpu+" processors.")
-    log_file.write("You have chosen to use {} processors.".format(str(cpu)))
-
 # Getting data into working directory to begin analysis
     ftp_lst = [hm27_ftp, hm46_ftp, hm65_ftp, hm69_ftp]
 
@@ -138,7 +133,7 @@ def main():
 
 # Running Prokka on data
     prokka_lst = [hm27_prokka, hm46_prokka, hm65_prokka, hm69_prokka]
-    prokka_run(cpu, data_lst, prokka_lst, log_file)
+    prokka_run(data_lst, prokka_lst, log_file)
 
 if __name__ == '__main__':
     main()
