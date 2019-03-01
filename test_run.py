@@ -101,11 +101,11 @@ def prokka_run(cpu, data_lst, prokka_lst, log_file):
         diffT = feature_count["tRNA"]-prokka_count["tRNA"]
         if diffCDS > 0 and diffT > 0:
             log_file.write("Prokka found {} less CDS and {} less tRNA than the RefSeq in assembly {}.".format(abs(diffCDS), abs(diffT), strain[0]))
-        elif: diffCDS > 0 and diffT <= 0:
+        elif diffCDS > 0 and diffT <= 0:
             log_file.write("Prokka found {} less CDS and {} more tRNA than the RefSeq in assembly {}.".format(abs(diffCDS), abs(diffT), strain[0]))
-        elif: diffCDS <= 0 and diffT > 0:
+        elif diffCDS <= 0 and diffT > 0:
             log_file.write("Prokka found {} more CDS and {} less tRNA than the RefSeq in assembly {}.".format(abs(diffCDS), abs(diffT), strain[0]))
-        elif: diffCDS <= 0 and diffT <= 0:
+        elif diffCDS <= 0 and diffT <= 0:
             log_file.write("Prokka found {} more CDS and {} more tRNA than the RefSeq in assembly {}.".format(abs(diffCDS), abs(diffT), strain[0]))
     return
 
