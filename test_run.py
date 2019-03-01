@@ -23,6 +23,12 @@ hm46_data = ['hm46', 'hm46_fasta.fna', 'hm46_feature_count.txt', 'hm46_prokka']
 hm65_data = ['hm65', 'hm65_fasta.fna', 'hm65_feature_count.txt', 'hm65_prokka']
 hm69_data = ['hm69', 'hm69_fasta.fna', 'hm69_feature_count.txt', 'hm69_prokka']
 
+# stores location of prokka .txt output
+hm27_prokka = ['./hm27_prokka/hm27_prokka.txt']
+hm46_prokka = ['./hm46_prokka/hm46_prokka.txt']
+hm65_prokka = ['./hm65_prokka/hm65_prokka.txt']
+hm69_prokka = ['./hm69_prokka/hm69_prokka.txt']
+
 # Retrieve ftp addresses from input file "sample_data.txt"
 def get_ftp(strain, data_file):
     # with open('sample_data.txt','r') as data_file:
@@ -54,9 +60,62 @@ def seqCount(data_lst, log_file):
         log_file.write("There are {} bp in the assembly {}.\n".format(str(count), strain[0]))
     return
 
+def prokka_run(cpu, data_lst, prokka_lst, log_file):
+    log_file.write("Now running prokka.")
+    for strain in data_lst:
+        prokka_command = "prokka --usegenus --genus Escherichia --cpus {} --prefix {} {}".format(cpu, strain[3], strain[1])
+        log_file.write(prokka_command)
+        os.system(prokka_command)
+
+    for strain, prokInfo in zip(data_lst, prokka_lst):
+        feature_count = {"CDS":0, "tRNA":0}
+        prokka_count = {"CDS":0, "tRNA":0}
+        with open(strain[2], "r") as in_file:
+            line_arr = []
+            for line in in_file:
+                line_arr.append(line)
+
+            for line in line_arr:
+                temp = line.strip('\n').split('\t')
+
+                if temp[0] == "CDS" and temp[1] == "with_protein":
+                    feature_count["CDS"] = int(temp[6])
+
+                if temp[0] == "tRNA":
+                    feature_count["tRNA"] = int(temp[6])
+
+        with open(prokInfo[0], "r") as in_file:
+            line_arr = []
+            for line in in_file:
+                line_arr.append(line)
+
+            for line in line_arr:
+                temp = line.strip('\n').split(':')
+
+                if temp[0] == "CDS":
+                    prokka_count["CDS"] = int(temp[1])
+
+                if temp[0] == "tRNA":
+                    prokka_count["tRNA"] = int(temp[1])
+        diffCDS = feature_count["CDS"]-prokka_count["CDS"]
+        diffT = feature_count["tRNA"]-prokka_count["tRNA"]
+        if diffCDS > 0 and diffT > 0:
+            log_file.write("Prokka found {} less CDS and {} less tRNA than the RefSeq in assembly {}.".format(abs(diffCDS), abs(diffT), strain[0]))
+        elif: diffCDS > 0 and diffT <= 0:
+            log_file.write("Prokka found {} less CDS and {} more tRNA than the RefSeq in assembly {}.".format(abs(diffCDS), abs(diffT), strain[0]))
+        elif: diffCDS <= 0 and diffT > 0:
+            log_file.write("Prokka found {} more CDS and {} less tRNA than the RefSeq in assembly {}.".format(abs(diffCDS), abs(diffT), strain[0]))
+        elif: diffCDS <= 0 and diffT <= 0:
+            log_file.write("Prokka found {} more CDS and {} more tRNA than the RefSeq in assembly {}.".format(abs(diffCDS), abs(diffT), strain[0]))
+    return
 
 def main():
     log_file = open("UPEC.log", "a")
+
+    cpu = input("How many processors would you like to use during this run?\nWe recomend using 4, but go with what your system can handle.\nPlease type the number of processors you want: ")
+    type(cpu)
+    print("You have chosen to use "+cpu+" processors.")
+    log_file.write("You have chosen to use {} processors.".format(str(cpu)))
 
     data_file = []
     for data in sys.stdin:
@@ -76,6 +135,8 @@ def main():
 # Finding number of contigs and assembly length
     data_lst = [hm27_data, hm46_data, hm65_data, hm69_data]
     seqCount(data_lst, log_file)
+
+
 
 if __name__ == '__main__':
     main()
