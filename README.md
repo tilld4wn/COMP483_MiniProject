@@ -25,7 +25,7 @@ git clone https://github.com/tilld4wn/COMP483_MiniProject.git
 ```
 
 ## Proper Input
-The input for this wrapper is a tab delimited text file. Use the supplied test data file titled sample_data.txt
+The input for this wrapper is a tab delimited text file. Use the supplied test data file titled sample_data.txt \n
 The data contained in the input file should contain strain name, fasta .fna.gz FTP link, and feature_count.txt.gz FTP link. 
 **EXAMPLE INPUT FROM TEST DATA FILE**
 ```
@@ -45,9 +45,9 @@ As the pipeline runs, it will produce multiple files. Among these files will be 
 The pipeline should run in about 20 hours with the preset cpu input.
 
 ## Future Development/Improvements
-This wrapper is quite crude and could use some modifications to run more efficiently. 
-Additionally, I would like to improve user input functionality.
-***IMPORTANT***
-CUFFNORM IS GOING TO FAIL. THE FILES USED AS INPUT ARE NOT COMPATIBLE WITH THE SOFTWARE.
+This wrapper is quite crude and could use some modifications to run more efficiently. \n
+Additionally, I would like to improve user input functionality. \n
+***IMPORTANT*** 
+CUFFNORM IS GOING TO FAIL. THE FILES USED AS INPUT ARE NOT COMPATIBLE WITH THE SOFTWARE. \n
 This error in the wrapper is another future improvement.
 
