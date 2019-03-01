@@ -149,6 +149,7 @@ def cuffmerge_run(assembly, merged_gtf, hm27, hm46, hm65, hm69):
     os.system(cuffnorm_command)
 
     return
+    
 def main():
     log_file = open("UPEC.log", "a")
 
@@ -203,6 +204,8 @@ def main():
             out_file.write(gtf[0])
 
     cuffmerge_run('assemblies.txt', merged_gtf, hm27_tophat, hm46_tophat, hm65_tophat, hm69_tophat)
+
+    log_file.close()
 
 if __name__ == '__main__':
     main()
